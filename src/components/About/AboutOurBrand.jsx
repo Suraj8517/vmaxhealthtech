@@ -27,7 +27,7 @@ const brands = ["vmax.fit", "fitmomclub"];
 
 export default function Brands() {
   return (
-    <section className="h-screen w-full bg-black text-white flex flex-col px-6 py-8 md:px-16 md:py-14">
+    <section className="h-screen w-full bg-[#08090a] text-white flex flex-col px-6 py-8 md:px-16 md:py-19">
       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-10 flex-wrap">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
           Our Brands
@@ -44,7 +44,7 @@ export default function Brands() {
           {brands.map((name) => (
             <span
               key={name}
-              className="font-mono text-xs font-bold uppercase tracking-wide"
+              className="font-mono text-xs text-red-600 font-bold uppercase tracking-wide"
             >
               {name}
             </span>

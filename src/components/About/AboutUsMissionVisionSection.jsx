@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { Plus } from "lucide-react";
-
+import img1 from "../../assets/img3.webp"
 export default function MissionVision() {
   const pinRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
@@ -28,7 +28,7 @@ export default function MissionVision() {
             className="h-full shrink-0 overflow-hidden"
           >
             <img
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1600&auto=format&fit=crop"
+              src={img1}
               alt="Two designers reviewing work together on a laptop"
               className="w-full h-full object-cover"
             />
