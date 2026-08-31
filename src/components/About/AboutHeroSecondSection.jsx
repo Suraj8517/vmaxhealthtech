@@ -2,15 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import logo from "../../assets/vmax.png"
 import AuroraText from "../Helper/AuroraText";
 const HEADLINE =
-  "PROVIDING TECHNICAL LEADERSHIP AND DESIGN TO DELIVER QUALITY SOFTWARE SOLUTIONS, INCLUDING ARCHITECTURE, INTEGRATIONS, AND MACHINE LEARNING.";
+  "DRIVING INNOVATION IN HEALTH AND WELLNESS THROUGH TECHNOLOGY, DESIGN, AND INTELLIGENT DIGITAL SOLUTIONS THAT CREATE LASTING IMPACT.";
 
 const BODY =
-  "Designing and building systems with a stable senior team, so context compounds and decisions improve over time. Every engagement draws on the Phobos collective intelligence, strengthening architecture and delivery, enabling evolution.";
+  "Building technology that makes wellness simpler, smarter, and more accessible. Founded in 2022 by passionate fitness enthusiasts, VMax Health Tech brings together innovation and wellness to empower people and businesses to achieve better outcomes.";
 
-// Text repeated around the seal, spaced by mid-dots.
 const SEAL_TEXT =
-  "PASSION IN THE PROCESS  \u2022  EST. 2008  \u2022  PHOBOS CONSULTING  \u2022  EST. 2008  \u2022  ";
-
+  "INNOVATION IN WELLNESS  •  EST. 2022  •  VMAX HEALTH TECH  •  EST. 2022  •  ";
 const ACCENT = "#ff2b2b"; // red accent used across the seal + CTA hover states
 
 function LogoMark({ logoSrc, logoAlt = "Company logo", size }) {
