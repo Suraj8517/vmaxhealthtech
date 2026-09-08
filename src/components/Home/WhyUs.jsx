@@ -70,7 +70,7 @@ function WhyUs() {
 
   return (
     <section ref={containerRef} className="relative w-full bg-black text-white ">
-      <div className="mt-44 h-[320px] w-full hidden md:block">
+      <div className="mt-44 h-0  sm:h-[320px] w-full hidden md:block">
         <DotGrid />
       </div>
 
@@ -119,8 +119,7 @@ function WhyUs() {
             </div>
           </div>
 
-          {/* Mobile-only label */}
-          <div className="lg:hidden pt-16"></div>
+         
 
           {/* RIGHT — scrolling content blocks */}
           <div className="lg:w-3/5 flex flex-col gap-20 sm:gap-24 lg:gap-32 py-10 lg:py-32">
