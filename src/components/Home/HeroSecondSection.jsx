@@ -65,9 +65,9 @@ function Word({ children, progress, range }) {
 
 function HeroSecondSection() {
   return (
-    <section className='min-h-fit sm:h-[90vh] mx-4 sm:mx-6 py-5 sm:py-6 lg:py-15 flex items-center'>
+    <section className='min-h-fit sm:h-[90vh] mx-4 sm:mx-6 py-10 sm:py-6 lg:py-15 flex items-center'>
       <div className='grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-6 sm:gap-12 px-4 sm:px-6 lg:px-16'>
-        <h2 className='font-sans font-light text-white text-xl sm:text-3xl lg:text-4xl max-w-full sm:max-w-xs'>
+        <h2 className='font-sans font-light text-white text-2xl sm:text-3xl lg:text-4xl max-w-full sm:max-w-xs'>
           <AuroraText>Empowering Wellness Through Intelligent Solutions</AuroraText>
         </h2>
 
