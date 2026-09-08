@@ -225,7 +225,7 @@ export default function Navbar() {
                   padding: "18px 0",
                   fontSize: "28px",
                   fontWeight: 500,
-                  color: activeIndex === i ? COLORS.accent : COLORS.paper,
+                  color: activeIndex === i ? COLORS.accent : "#ffffff",
                   cursor: "pointer",
                   opacity: open ? 1 : 0,
                   transform: open ? "translateY(0)" : "translateY(6px)",
