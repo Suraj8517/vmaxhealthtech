@@ -75,7 +75,7 @@ function WhyUs() {
       </div>
 
       {/* Header block */}
-      <div className="w-full px-6 sm:px-10 lg:px-12 mb-20 lg:mb-28">
+      <div className="w-full px-6 sm:px-10 lg:px-12 mb-10 lg:mb-28">
         <div className="max-w-6xl mx-auto">
           <span className="inline-flex items-center gap-2 text-[#ff2727] text-xs tracking-[0.2em] font-mono uppercase mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-[#ff2727]" />
