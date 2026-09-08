@@ -12,7 +12,7 @@ function Hero() {
 
   
   return (
-    <div className="relative sm:h-screen h-[60vh] w-full bg-black overflow-hidden">
+    <div className="relative sm:h-screen h-[50vh] w-full bg-black overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 z-0 ">
         <div className="sm:h-screen h-[60vh] " style={{ width: '100%', position: 'relative' }}>

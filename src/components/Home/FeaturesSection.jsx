@@ -36,12 +36,12 @@ const features = [
 export default function FeaturesSection() {
   return (
 
-    // This section is intentionally taller than 100vh (min-h-[200vh]) so there's
-    // room for the sticky background to "hold" while content scrolls over it.
-    <section className="relative bg-black min-h-[200vh] xl:min-h-[150vh] 
-  " >
+    // This section is intentionally taller than 100vh so there's room for the
+    // sticky background to "hold" while content scrolls over it. Mobile gets
+    // extra height since the two columns stack into one long column there.
+    <section className="relative bg-black min-h-[230vh] sm:min-h-[200vh] xl:min-h-[150vh]">
 
-      {/* Top transition overlay: black -> transparent, now spans full screen height */}
+      {/* Top transition overlay: black -> transparent, spans full screen height */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 z-5 h-screen"
         style={{
@@ -50,7 +50,7 @@ export default function FeaturesSection() {
         }}
       />
 
-      {/* Bottom transition overlay: black -> transparent, now spans full screen height */}
+      {/* Bottom transition overlay: black -> transparent, spans full screen height */}
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 z-5 h-screen"
         style={{
@@ -93,7 +93,6 @@ export default function FeaturesSection() {
           />
         </div>
 
-
         <div
           className="pointer-events-none absolute inset-0"
           style={{
@@ -106,16 +105,16 @@ export default function FeaturesSection() {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black via-black/10 to-black/60" />
       </div>
 
-      <div className="absolute inset-0 z-10 mx-auto w-full px-6 lg-px-8">
-        <div className="grid grid-cols-1 gap-16 pt-20 sm:pt-28 lg:grid-cols-2 lg:gap-8">
+      <div className="absolute inset-0 z-10 mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-10 sm:gap-16 pt-8 sm:pt-16 lg:pt-28 lg:grid-cols-2 lg:gap-8">
           {/* Left column */}
           <div className="flex flex-col justify-start">
-            <div className="mb-6 flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-white/60">
+            <div className="mb-4 sm:mb-6 flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-[0.2em] text-white/60">
               <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
               VMAX HEALTHTECH
             </div>
 
-            <h2 className=" text-5xl font-light leading-[1.05] text-white sm:text-5xl">
+            <h2 className="text-[28px] leading-[1.1] font-light text-white sm:text-3xl sm:leading-[1.05] md:text-4xl lg:text-5xl">
               Streamline Your{" "}
               <AuroraText
                 colors={["#FF0000", "#f99d9d", "#f99d9d", "#FF0000"]}
@@ -133,32 +132,32 @@ export default function FeaturesSection() {
               </AuroraText>
             </h2>
 
-            <div className="mt-10 flex flex-wrap items-center gap-3">
+            <div className="mt-6 sm:mt-10 flex flex-wrap items-center gap-3">
               <a
                 href="#"
-                className="inline-flex items-center gap-2 rounded-md bg-red-600 px-5 py-3 text-sm font-mono uppercase tracking-wide text-white transition hover:bg-red-500"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-red-600 px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm font-mono uppercase tracking-wide text-white transition hover:bg-red-500"
               >
                 Our Products
                 <ArrowUpRight className="h-4 w-4" />
               </a>
               <a
                 href="#"
-                className="inline-flex items-center gap-2 rounded-md border border-white/15 bg-white/5 px-5 py-3 text-sm font-mono uppercase tracking-wide text-white transition hover:bg-white/10"
+                className="inline-flex items-center justify-center gap-2 rounded-md border border-white/15 bg-white/5 px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm font-mono uppercase tracking-wide text-white transition hover:bg-white/10"
               >
-               About Us
+                About Us
               </a>
             </div>
           </div>
 
           {/* Right column - feature list */}
-          <div className="flex flex-col justify-center ">
+          <div className="flex flex-col justify-center">
             {features.map(({ icon: Icon, title, description }) => (
-              <div key={title} className="py-7 first:pt-0 last:pb-0">
-                <div className="mb-3 flex items-center gap-3">
-                  <Icon className="h-6 w-6 shrink-0 text-white" strokeWidth={1.5} />
-                  <h3 className="text-2xl font-medium text-white">{title}</h3>
+              <div key={title} className="py-3 sm:py-7 first:pt-0 last:pb-0">
+                <div className="mb-2 sm:mb-3 flex items-center gap-2 sm:gap-3">
+                  <Icon className="h-5 w-5 sm:h-6 sm:w-6 shrink-0 text-white" strokeWidth={1.5} />
+                  <h3 className="text-base sm:text-lg lg:text-2xl font-medium text-white">{title}</h3>
                 </div>
-                <p className="max-w-xl text-[15px] leading-relaxed text-white/60">
+                <p className="max-w-xl text-[13px] sm:text-[14px] lg:text-[15px] leading-relaxed text-white/60">
                   {description}
                 </p>
               </div>
