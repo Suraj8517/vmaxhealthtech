@@ -101,7 +101,7 @@ export default function Footer() {
             Let's build something
           </span>
 
-          <h2 className="m-0 max-w-full text-[clamp(28px,9vw,40px)] font-bold uppercase leading-[0.96] tracking-[-0.02em] sm:max-w-[16ch] sm:text-[clamp(24px,4.5vw,56px)]">
+          <h2 className="m-0 text-[clamp(24px,7vw,35px)] font-bold uppercase leading-[0.96] tracking-[-0.02em] sm:max-w-[20ch] sm:text-[clamp(24px,4vw,40px)]">
             Unlock Growth &amp; Client Success
             <br className="hidden sm:block" />
             with VMax
