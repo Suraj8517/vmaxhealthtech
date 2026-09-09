@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { ShieldCheck, Lock, Box, Globe, ArrowUpRight } from "lucide-react";
+import { BookOpen, Settings, UserCog, Globe, ArrowUpRight } from "lucide-react";
 import AuroraText from "../Helper/AuroraText";
 import HeroSecondSection from "./HeroSecondSection";
 import LightTunnel from "../Helper/LightTunnel";
@@ -8,28 +8,28 @@ import FeatureSecondSection from "./FeatureSecondSection";
 
 const features = [
   {
-    icon: ShieldCheck,
-    title: "SOC 2, HIPAA, GDPR, ISO",
+    icon: BookOpen,
+    title: "Al-Powered Insights ",
     description:
-      "Built to meet strict security and privacy standards, including giving you a compliant foundation for sensitive and regulated workloads.",
+      "Make data-driven decisions with personalized recommendations and predictive analytics.",
   },
   {
-    icon: Lock,
-    title: "Data Residency",
+    icon: Settings,
+    title: "Automated Engagement ",
     description:
-      "Deploy workloads in specific regions to meet regulatory or contractual data privacy requirements. We ensure your data stays exactly where it needs to be.",
+      "Keep clients motivated with automated reminders, progress reports, and targeted communication.",
   },
   {
-    icon: Box,
-    title: "Isolation",
+    icon: UserCog,
+    title: "Effortless Client Management ",
     description:
-      "We run each workload on top of a hardened, isolated environment to provide strong container isolation without compromising performance.",
+      "Centralize client data, track progress effortlessly, and streamline communication.",
   },
   {
     icon: Globe,
-    title: "99.999% Uptime",
+    title: "Boost Client Retention ",
     description:
-      "We have multi-region failovers so if one region or cloud goes down, we will route traffic to the next best alternative within your constraints.",
+      "Foster engagement, build stronger relationships, and drive long-term success for your clients.",
   },
 ];
 
@@ -39,7 +39,7 @@ export default function FeaturesSection() {
     // This section is intentionally taller than 100vh so there's room for the
     // sticky background to "hold" while content scrolls over it. Mobile gets
     // extra height since the two columns stack into one long column there.
-    <section className="relative bg-black min-h-[150vh] sm:min-h-[200vh] xl:min-h-[150vh]">
+    <section className="relative bg-[#0D0D0B] min-h-[150vh] sm:min-h-[200vh] xl:min-h-[150vh]">
 
       {/* Top transition overlay: black -> transparent, spans full screen height */}
       <div

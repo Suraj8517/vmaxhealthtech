@@ -1,4 +1,4 @@
-import { Check, Crown, Gem } from "lucide-react";
+import { Gem, Crown } from "lucide-react";
 
 export default function OurProducts() {
   const plans = [
@@ -7,78 +7,87 @@ export default function OurProducts() {
       icon: Gem,
       duration: "360 Days",
       price: "68,788",
-      features: [
-        "360-day active membership",
-        "Priority support access",
-        "Standard reward tracking",
-        "Monthly performance report",
-      ],
-      ring: "border-yellow-600/50",
-      iconBg: "bg-yellow-600/15 text-yellow-500",
-      priceColor: "text-yellow-500",
-      check: "text-yellow-500",
-      glow: "shadow-[0_0_40px_-14px_rgba(202,138,4,0.45)]",
+      accent: "#C9A227",
+      accentSoft: "rgba(201,162,39,0.10)",
     },
     {
       name: "Platinum",
       icon: Crown,
       duration: "360 Days",
       price: "5,20,000",
-      features: [
-        "360-day active membership",
-        "Dedicated relationship manager",
-        "Advanced reward tracking",
-        "Weekly performance report",
-        "Early access to new offers",
-      ],
-      ring: "border-slate-400/50",
-      iconBg: "bg-slate-300/15 text-slate-300",
-      priceColor: "text-slate-200",
-      check: "text-slate-300",
-      glow: "shadow-[0_0_40px_-14px_rgba(203,213,225,0.4)]",
+      accent: "#C7CDD1",
+      accentSoft: "rgba(199,205,209,0.10)",
     },
   ];
 
   return (
-    <section className="bg-neutral-950 py-24 px-6">
-      <div className="mx-auto max-w-4xl">
+    <section className="bg-[#0e0e0c] py-28 px-6">
+      <div className="mx-auto max-w-3xl">
         {/* Header */}
-        <div className="mb-16 text-center">
-          <span className="text-sm tracking-wide text-red-500">Our Plans</span>
-          <h2 className="mt-3 font-serif text-4xl text-neutral-50 sm:text-5xl">
-            Choose your membership
+        <div className="mb-10 text-center">
+          <h2 className="mt-3 font-serif text-4xl text-red-500 sm:text-5xl">
+            Our Products
           </h2>
+          <p className="mx-auto mt-4 max-w-md text-sm text-neutral-500">
+            Two membership tiers, each built around a full year of active
+            benefits.
+          </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid gap-8 sm:grid-cols-2">
-          {plans.map((plan) => {
+        {/* Split panel */}
+        <div className="grid overflow-hidden rounded-3xl border border-white/10 sm:grid-cols-2">
+          {plans.map((plan, i) => {
             const Icon = plan.icon;
             return (
               <div
                 key={plan.name}
-                className={`flex flex-col rounded-2xl border bg-neutral-900/60 p-8 ${plan.ring} ${plan.glow}`}
+                className={`relative flex flex-col items-center justify-center px-10 py-16 text-center ${
+                  i === 0 ? "sm:border-r sm:border-white/10" : ""
+                }`}
+                style={{ background: plan.accentSoft }}
               >
-                <div className="mb-6 flex items-center gap-3">
-                  <div className={`flex h-10 w-10 items-center justify-center rounded-full ${plan.iconBg}`}>
-                    <Icon size={20} />
-                  </div>
-                  <h3 className="font-serif text-2xl text-neutral-50">{plan.name}</h3>
+                {/* watermark icon */}
+                <Icon
+                  size={180}
+                  strokeWidth={0.75}
+                  className="pointer-events-none absolute -right-8 -top-8 opacity-[0.06]"
+                  style={{ color: plan.accent }}
+                />
+
+                <Icon
+                  size={28}
+                  strokeWidth={1.5}
+                  style={{ color: plan.accent }}
+                  className="mb-5"
+                />
+
+                <h3 className="font-serif text-2xl text-neutral-50">
+                  {plan.name}
+                </h3>
+
+                <div className="mt-8 flex items-baseline gap-1.5">
+                  <span
+                    className="font-serif text-3xl"
+                    style={{ color: plan.accent }}
+                  >
+                    ₹
+                  </span>
+                  <span
+                    className="font-serif text-5xl font-medium tracking-tight sm:text-6xl"
+                    style={{ color: plan.accent }}
+                  >
+                    {plan.price}
+                  </span>
                 </div>
 
-                <div className="mb-1 flex items-baseline gap-2">
-                  <span className={`text-4xl font-semibold ${plan.priceColor}`}>₹{plan.price}</span>
-                </div>
-                <span className="mb-6 text-sm text-neutral-500">for {plan.duration}</span>
+                <div
+                  className="mt-6 h-px w-10"
+                  style={{ background: plan.accent, opacity: 0.4 }}
+                />
 
-                <ul className="flex flex-col gap-3">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 text-sm text-neutral-300">
-                      <Check size={16} className={`mt-0.5 shrink-0 ${plan.check}`} />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                <span className="mt-6 text-sm text-neutral-400">
+                  for {plan.duration}
+                </span>
               </div>
             );
           })}

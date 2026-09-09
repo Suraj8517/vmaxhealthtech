@@ -69,7 +69,7 @@ function WhyUs() {
   );
 
   return (
-    <section ref={containerRef} className="relative w-full bg-black text-white ">
+    <section ref={containerRef} className="relative w-full bg-gradient-to-b from-black to-[#0D0D0B] text-white ">
       <div className="mt-44 h-0  sm:h-[320px] w-full hidden md:block">
         <DotGrid />
       </div>
@@ -104,7 +104,7 @@ function WhyUs() {
 
       <div className=" mx-auto px-6 sm:px-10 lg:px-16">
         <div className="flex flex-col lg:flex-row lg:gap-16">
-          <div className="hidden lg:flex lg:w-2/5 lg:sticky lg:top-0 lg:h-screen flex-col justify-start pt-32">
+          <div className="hidden lg:flex lg:w-2/5 lg:sticky lg:top-0 lg:h-screen flex-col justify-start pt-60">
             <div className="flex flex-col gap-4">
               {sections.map((s, i) => (
                 <h3

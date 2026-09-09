@@ -7,6 +7,10 @@ import About from "./About";
 import Team from "./Team";
 import OurProductsPage from "./ourproducts";
 import Navbar from "../components/NavBar";
+import Footer from "../components/Footer";
+import TermsAndConditions from "./termsandcondition";
+import RefundPolicy from "./refundPolicy";
+import PrivacyPolicy from "./privacypolicy";
 
 
 function App() {
@@ -34,7 +38,11 @@ function App() {
             <Route path="/about" element={<About />} />
        <Route path="/team" element={<Team />} />
        <Route path="/our-products" element={<OurProductsPage />} />
+              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+                            <Route path="/refund-policy" element={<RefundPolicy />} />
+<Route path="/privacy-policy" element={<PrivacyPolicy />} />
           </Routes>
+          <Footer/>
         </>
       )}
     </BrowserRouter>

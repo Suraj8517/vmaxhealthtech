@@ -36,10 +36,10 @@ export default function MissionVision() {
 
           <motion.div
             style={staticImage ? { x: "0%" } : { x: cardsX }}
-            className="absolute right-0 top-0 h-full w-1/3 flex flex-col"
+            className="absolute right-0 top-12 h-full w-1/3 flex flex-col"
           >
-            <div className="flex-1 bg-red-300 px-8 py-10 flex flex-col justify-start">
-              <div className="text-6xl md:text-7xl font-light tracking-tight leading-none uppercase">
+            <div className="flex-1 bg-red-300 px-8 py-10 flex flex-col justify-start ">
+              <div className="text-6xl md:text-7xl font-light tracking-tight leading-none uppercase ">
                 Mission
               </div>
               <p className="mt-4 text-base leading-snug max-w-sm text-black/60">

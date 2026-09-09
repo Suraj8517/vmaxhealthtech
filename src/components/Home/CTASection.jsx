@@ -43,7 +43,7 @@ function CTA() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-black overflow-hidden"
+      className="relative w-full bg-[#0E0E0C] overflow-hidden"
     >
       <div className="relative z-10 mx-6 sm:mx-10 lg:mx-16 py-16 sm:py-18 lg:py-24 flex flex-col items-center text-center rounded-3xl">
         <span className="inline-flex items-center gap-2 text-[#ff2727] text-xs tracking-[0.2em] font-mono uppercase mb-8">
