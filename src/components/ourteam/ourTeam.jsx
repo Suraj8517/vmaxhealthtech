@@ -115,7 +115,7 @@ function Heading() {
 // --- Mobile: no pin, no scroll-jacking. Native scroll-snap carousel. ---
 function MobileTeamSection() {
   return (
-    <section className="relative isolate w-full overflow-hidden bg-[#050505] py-16">
+    <section className="relative isolate w-full overflow-hidden bg-[#10100E] py-16">
       <SectionBackdrop />
       <div className="relative px-6">
         <Heading />
@@ -190,7 +190,7 @@ function DesktopTeamSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate w-full overflow-hidden bg-[#050505]"
+      className="relative isolate w-full overflow-hidden bg-[#0A0A08]"
     >
       <SectionBackdrop />
 
