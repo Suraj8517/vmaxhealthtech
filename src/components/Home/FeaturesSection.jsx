@@ -164,7 +164,7 @@ export default function FeaturesSection() {
             ))}
           </div>
         </div>
-        <FeatureSecondSection/>
+    
       </div>
     </section>
   );
