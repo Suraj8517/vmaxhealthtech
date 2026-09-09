@@ -39,7 +39,7 @@ export default function FeaturesSection() {
     // This section is intentionally taller than 100vh so there's room for the
     // sticky background to "hold" while content scrolls over it. Mobile gets
     // extra height since the two columns stack into one long column there.
-    <section className="relative bg-[#0D0D0B] min-h-[155vh] sm:min-h-[200vh] xl:min-h-[150vh]">
+    <section className="relative bg-[#0D0D0B] min-h-[130vh] sm:min-h-[200vh] xl:min-h-[150vh]">
 
       {/* Top transition overlay: black -> transparent, spans full screen height */}
       <div
@@ -164,7 +164,7 @@ export default function FeaturesSection() {
             ))}
           </div>
         </div>
-    
+        <FeatureSecondSection/>
       </div>
     </section>
   );
