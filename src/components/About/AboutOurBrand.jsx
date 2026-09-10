@@ -27,7 +27,7 @@ const brands = ["vmax.fit", "fitmomclub"];
 
 export default function Brands() {
   return (
-    <section className="h-screen w-full bg-[#08090a] text-white flex flex-col px-6 py-8 md:px-16 md:py-19">
+    <section className="h-[70vh] sm:h-screen w-full bg-[#08090a] text-white flex flex-col px-6 py-8 md:px-16 md:py-19">
       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-10 flex-wrap">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
           Our Brands

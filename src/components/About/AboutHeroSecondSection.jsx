@@ -8,10 +8,10 @@ const BODY =
   "Building technology that makes wellness simpler, smarter, and more accessible. Founded in 2022 by passionate fitness enthusiasts, VMax Health Tech brings together innovation and wellness to empower people and businesses to achieve better outcomes.";
 
 const SEAL_TEXT =
-  "INNOVATION IN WELLNESS  •  EST. 2022  •  VMAX HEALTH TECH  •  EST. 2022  •  ";
+  "INNOVATION IN WELLNESS  •  EST. 2022  •  VMAX HEALTHTECH • ";
 const ACCENT = "#ff2b2b"; // red accent used across the seal + CTA hover states
 
-function LogoMark({ logoSrc, logoAlt = "Company logo", size }) {
+function LogoMark({ logoSrc, logoAlt = "Company logo" }) {
   if (logoSrc) {
     return (
       <img
@@ -23,7 +23,7 @@ function LogoMark({ logoSrc, logoAlt = "Company logo", size }) {
     );
   }
   return (
-    <svg width={size} height={size} viewBox="0 0 44 44" aria-hidden="true">
+    <svg viewBox="0 0 44 44" className="h-full w-full" aria-hidden="true">
       <rect x="8" y="10" width="7" height="8" rx="1.5" fill={ACCENT} />
       <rect x="29" y="10" width="7" height="8" rx="1.5" fill={ACCENT} />
       <rect x="9" y="27" width="26" height="8" rx="4" fill={ACCENT} />
@@ -31,21 +31,23 @@ function LogoMark({ logoSrc, logoAlt = "Company logo", size }) {
   );
 }
 
-function Seal({ size = 168, logoSrc, logoAlt }) {
+// Seal is drawn at a fixed viewBox but sized fluidly via CSS clamp(), so the
+// text ring, logo, and stroke widths all stay proportional as the container
+// shrinks on small screens instead of just getting cropped or overflowing.
+function Seal({ size = 188, minSize = 128, viewportShare = "30vw", logoSrc, logoAlt }) {
   const R = size / 2;
-  const textRadius = R - 19;
+  const textRadius = R - 9;
   const pathId = "seal-ring-path";
+  const dimension = `clamp(${minSize}px, ${viewportShare}, ${size}px)`;
 
   return (
     <div
       className="relative shrink-0 select-none"
-      style={{ width: size, height: size }}
+      style={{ width: dimension, height: dimension }}
     >
       <svg
         viewBox={`0 0 ${size} ${size}`}
-        width={size}
-        height={size}
-        className="motion-safe:animate-[seal-spin_20s_linear_infinite]"
+        className="h-full w-full motion-safe:animate-[seal-spin_20s_linear_infinite]"
         aria-hidden="true"
       >
         <defs>
@@ -69,13 +71,15 @@ function Seal({ size = 168, logoSrc, logoAlt }) {
         </text>
       </svg>
 
-      {/* Logo, held fixed in the center while the ring rotates around it */}
+      {/* Logo, held fixed in the center while the ring rotates around it.
+          Sized as a percentage of the (now fluid) parent so it scales with
+          the seal instead of drifting out of proportion on small screens. */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <div
           className="flex items-center justify-center rounded-full"
-          style={{ width: size * 0.34, height: size * 0.34 }}
+          style={{ width: "34%", height: "34%" }}
         >
-          <LogoMark logoSrc={logoSrc} logoAlt={logoAlt} size={size * 0.34} />
+          <LogoMark logoSrc={logoSrc} logoAlt={logoAlt} />
         </div>
       </div>
     </div>
@@ -134,8 +138,11 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
 
   // Scroll parallax: headline/body ease upward and fade slightly, the seal
   // drifts and gently scales as the section leaves the top of the viewport.
+  // Skipped on mobile-width screens so the seal doesn't fight the natural
+  // document scroll of a taller, non-h-screen layout.
   useEffect(() => {
     if (prefersReducedMotion) return;
+    if (typeof window !== "undefined" && window.innerWidth < 768) return;
 
     let raf = null;
 
@@ -188,13 +195,14 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
   return (
     <section
       ref={sectionRef}
-      className="relative flex h-screen w-full flex-col justify-between overflow-hidden bg-black px-6 py-6 md:px-16 md:py-10"
+      className="relative flex min-h-[50vh] md:min-h-screen w-full flex-col justify-center gap-12 overflow-hidden bg-black px-6 py-20 md:h-screen md:justify-between md:gap-4 md:px-16 md:py-10"
     >
-      <div className="relative mx-4 grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-[1.1fr_1fr] md:gap-4 md:items-center">
-        {/* Headline — pulled up well above the row */}
+      <div className="relative mx-auto w-full max-w-7xl md:mx-4 grid grid-cols-1 gap-8 md:grid-cols-[1.1fr_1fr] md:gap-4 md:items-center">
+        {/* Headline — pulled up well above the row on desktop; sits at the
+            natural top of the stack on mobile */}
         <div ref={headlineWrapRef} style={{ willChange: "transform, opacity" }}>
           <h1
-            className="max-w-xl self-start -mt-2 font-circular text-[20px] font-bold uppercase leading-[1.15] tracking-tight text-white sm:text-4xl md:-mt-10 transition-all"
+            className="max-w-xl self-start font-circular text-[26px] font-bold uppercase leading-[1.2] tracking-tight text-white sm:text-4xl md:-mt-10 transition-all"
             style={{
               transitionDuration: prefersReducedMotion ? "0ms" : "900ms",
               transitionTimingFunction: entranceEase,
@@ -207,7 +215,8 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
           </h1>
         </div>
 
-        {/* Body copy + CTA, right column — centered within the row */}
+        {/* Body copy + CTA, right column on desktop — full width and
+            naturally stacked below the headline on mobile */}
         <div ref={bodyWrapRef} style={{ willChange: "transform, opacity" }}>
           <div
             className="flex flex-col justify-center self-center md:mt-22 md:pt-2 transition-all"
@@ -219,13 +228,13 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
               transform: loaded ? "translateY(0)" : "translateY(28px)",
             }}
           >
-            <p className="max-w-md text-[12px] sm:text-[18px] leading-relaxed text-[#a3a2a8]">
+            <p className="max-w-md text-[14px] sm:text-[18px] leading-relaxed text-[#a3a2a8]">
               {BODY}
             </p>
 
             <button
               type="button"
-              className="group mt-10 flex w-fit items-center gap-3 focus:outline-none"
+              className="group mt-8 flex w-fit items-center gap-3 focus:outline-none md:mt-10"
             >
               <span
                 className="flex h-9 w-9 items-center justify-center border border-white/25 text-base text-white/80 transition-colors group-hover:border-[#ff2b2b] group-hover:text-[#ff2b2b] group-focus-visible:border-[#ff2b2b] group-focus-visible:text-[#ff2b2b]"
@@ -241,11 +250,12 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
         </div>
       </div>
 
-      {/* Rotating seal — sits at the bottom of the section, centered on
-          mobile and pushed to the right on larger screens */}
+      {/* Rotating seal — follows the natural document flow right under the
+          content on mobile (no forced bottom placement), and anchors to
+          the bottom-right of the h-screen layout on desktop */}
       <div
         ref={sealWrapRef}
-        className="flex justify-center md:justify-end md:pr-8 pl-36"
+        className="md:flex justify-center md:justify-end md:pr-8 hidden "
         style={{ willChange: "transform, opacity" }}
       >
         <div
@@ -260,7 +270,7 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
             }deg)`,
           }}
         >
-          <Seal size={168} logoSrc={logo} logoAlt={logoAlt} />
+          <Seal size={168} minSize={108} viewportShare="30vw" logoSrc={logo} logoAlt={logoAlt}  />
         </div>
       </div>
     </section>
