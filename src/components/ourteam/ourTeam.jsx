@@ -32,7 +32,7 @@ const GRAIN_BG =
   );
 
 // Tracks whether we're above the desktop breakpoint. GSAP pin/scrub only
-// runs above this — below it we render a lighter native pin instead.
+// runs above this — below it we render a native scroll-snap carousel instead.
 function useIsDesktop(breakpoint = 768) {
   const [isDesktop, setIsDesktop] = useState(
     typeof window !== "undefined" ? window.innerWidth >= breakpoint : true
@@ -112,142 +112,30 @@ function Heading() {
   );
 }
 
-// --- Mobile: vertical page-scroll drives horizontal movement, same idea as
-// desktop's pin but implemented with a plain sticky container + rAF scroll
-// listener instead of GSAP ScrollTrigger's pin, which is heavier than this
-// needs to be on a phone. Falls back to a plain stacked layout (no motion,
-// no pin) when the user prefers reduced motion. ---
+// --- Mobile: no pin, no scroll-jacking. Native scroll-snap carousel. ---
 function MobileTeamSection() {
-  const wrapperRef = useRef(null);
-  const trackRef = useRef(null);
-  const stickyRef = useRef(null);
-  const pinHeightRef = useRef(0);
-  const [progress, setProgress] = useState(0);
-  const [scrollDistance, setScrollDistance] = useState(0);
-  const [pinHeight, setPinHeight] = useState(0);
-  const [prefersReducedMotion] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
-
-  // Measure (a) how far the track needs to travel horizontally, and (b) the
-  // sticky panel's own natural height — the panel is sized to its content
-  // (heading + cards), NOT forced to the full screen height, so there's no
-  // leftover empty space above/below it while it's pinned.
-  useLayoutEffect(() => {
-    if (prefersReducedMotion) return;
-    const track = trackRef.current;
-    const sticky = stickyRef.current;
-    if (!track || !sticky) return;
-
-    function measure() {
-      setScrollDistance(Math.max(track.scrollWidth - window.innerWidth, 0));
-      const h = sticky.offsetHeight;
-      pinHeightRef.current = h;
-      setPinHeight(h);
-    }
-
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(track);
-    ro.observe(sticky);
-    window.addEventListener("resize", measure);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", measure);
-    };
-  }, [prefersReducedMotion]);
-
-  // Vertical scroll progress through the pinned range. The "consumed"
-  // amount before release is the sticky panel's own height, not the full
-  // viewport — that's what keeps the wrapper height (and therefore the
-  // total scroll distance) matched to the actual pin duration.
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-
-    let raf = null;
-
-    function apply() {
-      raf = null;
-      const el = wrapperRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const consumed = pinHeightRef.current || window.innerHeight || 1;
-      const total = Math.max(rect.height - consumed, 1);
-      const p = Math.min(Math.max(-rect.top / total, 0), 1);
-      setProgress(p);
-    }
-
-    function onScroll() {
-      if (raf) return;
-      raf = requestAnimationFrame(apply);
-    }
-
-    apply();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, [prefersReducedMotion]);
-
-  // Wrapper height = the pixel scroll distance the track needs, plus the
-  // sticky panel's own measured height. Until both are measured, render
-  // with auto height rather than guessing — avoids an oversized flash.
-  const measured = scrollDistance > 0 && pinHeight > 0;
-  const wrapperHeight = prefersReducedMotion || !measured
-    ? "auto"
-    : `calc(${scrollDistance}px + ${pinHeight}px)`;
-
-  const trackX = prefersReducedMotion || !measured ? 0 : -(progress * scrollDistance);
-
-  if (prefersReducedMotion) {
-    return (
-      <section className="relative isolate w-full overflow-hidden bg-[#10100E] py-16">
-        <SectionBackdrop />
-        <div className="relative px-6">
-          <Heading />
-          <p className="mt-6 max-w-xs text-[15px] font-light leading-relaxed text-white/60">
-            We are a diverse team of domain experts and problem solvers.
-          </p>
-        </div>
-        <div className="relative mt-10 flex flex-col gap-10 px-6">
-          {TEAM.map((person) => (
-            <TeamCard key={person.name} person={person} widthClass="w-full max-w-[320px]" />
-          ))}
-        </div>
-      </section>
-    );
-  }
-
   return (
-    <section className="relative isolate w-full overflow-hidden bg-[#10100E]">
+    <section className="relative isolate w-full overflow-hidden bg-[#10100E] py-16">
       <SectionBackdrop />
-      <div ref={wrapperRef} className="relative w-full" style={{ height: wrapperHeight }}>
-        <div ref={stickyRef} className="sticky top-0 w-full overflow-hidden py-16">
-          <div
-            ref={trackRef}
-            className="flex shrink-0 items-center gap-8 px-6 will-change-transform"
-            style={{ transform: `translateX(${trackX}px)` }}
-          >
-            <div className="flex w-[84vw] max-w-[380px] shrink-0 flex-col justify-center pt-2">
-              <Heading />
-              <p className="mt-6 max-w-xs text-[15px] font-light leading-relaxed text-white/60">
-                We are a diverse team of domain experts and problem solvers.
-              </p>
-            </div>
-
-            {TEAM.map((person) => (
-              <TeamCard key={person.name} person={person} widthClass="w-[74vw] max-w-[300px]" />
-            ))}
-
-            <div className="w-6 shrink-0" aria-hidden="true" />
-          </div>
-        </div>
+      <div className="relative px-6">
+        <Heading />
+        <p className="mt-6 max-w-xs text-[15px] font-light leading-relaxed text-white/60">
+          We are a diverse team of domain experts and problem solvers.
+        </p>
       </div>
+
+      <div
+        className="relative mt-10 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {TEAM.map((person) => (
+          <div key={person.name} className="snap-start">
+            <TeamCard person={person} widthClass="w-[78vw] max-w-[320px]" />
+          </div>
+        ))}
+        <div className="w-2 shrink-0" aria-hidden="true" />
+      </div>
+
+    
     </section>
   );
 }
