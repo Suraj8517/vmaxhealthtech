@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import img1 from "../../assets/img1.webp";
+import img1 from "../../assets/img5.jpg";
 import img2 from "../../assets/img2.webp";
 import img3 from "../../assets/img3.webp";
 import img4 from "../../assets/img4.webp";
