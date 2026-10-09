@@ -3,7 +3,7 @@ import SoftAurora from "../Helper/SoftAurora";
 import GradientBlinds from '../Helper/GradientBlinds';
 import LogoLoader from "../Helper/LogoLoader";
 import BlurText from "../Helper/BlurText";
-import bg from "../../assets/bg1.mp4"; 
+import bg from "../../assets/bg2.jpg"; 
 function Hero() {
   const handleAnimationComplete = () => {
     console.log('Animation completed!');
@@ -13,11 +13,8 @@ function Hero() {
     <div className="relative sm:h-screen h-[50vh] w-full bg-black overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
-        <video
+        <img
           src={bg}
-          autoPlay
-          loop
-          muted
           className="w-full h-full object-cover object-center"
         />
         {/* Dark overlay for text readability (adjust opacity as needed) */}
