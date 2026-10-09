@@ -67,7 +67,7 @@ function MissionVisionDesktop() {
                 Mission
               </div>
               <p className="mt-4 text-base leading-snug max-w-sm text-black/60">
-                At VMax Health Tech, our mission is to empower 1 Million People and their Healthcare Providers with the tools they need to enhance health management. We believe that technology can play a pivotal role in improving wellness, and we are committed to making that belief a reality.
+               To empower one million people and the health and wellness professionals who support them through connected digital platforms that simplify health management, strengthen personalized care, and help wellness businesses grow.
                
               </p>
             </div>
@@ -76,7 +76,7 @@ function MissionVisionDesktop() {
                 Vision
               </div>
               <p className="mt-4 text-base leading-snug max-w-sm text-black/60">
-                We envision a world where technology and wellness go hand in hand, creating healthier communities through smarter health management. By continuously innovating and improving our solutions, we aim to set new standards in the Health and Wellness industry.
+                To create a world where technology makes better health and wellness accessible to everyone.
               </p>
             </div>
           </motion.div>

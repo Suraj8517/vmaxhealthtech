@@ -24,7 +24,7 @@ function Hero() {
         <div className="absolute inset-0 bg-black/70" />
       </div>
 
-      <div className="relative z-10 px-6 sm:px-10 lg:px-16 pt-28 sm:pt-32 lg:pt-40 pb-16">
+      <div className="relative z-10 px-6 sm:px-10 lg:px-16 pt-28 sm:pt-32 lg:pt-40  xl:pt-50 2xl:pt-50 pb-16">
         <div className="max-w-7xl 2xl:max-w-[90vw] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-7 gap-10 lg:gap-6 items-start">
             {/* Left: Headline + tags */}
@@ -36,7 +36,7 @@ function Hero() {
                   animateBy="words"
                   direction="top"
                   onAnimationComplete={handleAnimationComplete}
-                  className="font-circular leading-[0.9] tracking-tight text-white text-[15vw] sm:text-[10vw] md:text-[7.5rem] lg:text-[6.5rem] xl:text-[9rem] 2xl:text-[11rem] font-normal"
+                  className="font-circular leading-[0.9] tracking-tight text-white text-[15vw] sm:text-[10vw] md:text-[7.5rem] lg:text-[6.5rem] xl:text-[10rem] 2xl:text-[11rem] font-normal"
                 />
                 <BlurText
                   text="Simplified"
@@ -44,7 +44,7 @@ function Hero() {
                   animateBy="words"
                   direction="top"
                   onAnimationComplete={handleAnimationComplete}
-                  className="font-circular leading-[0.9] tracking-tight text-red-600 text-[15vw] sm:text-[10vw] md:text-[7.5rem] lg:text-[6.5rem] xl:text-[9rem] 2xl:text-[11rem] font-normal"
+                  className="font-circular leading-[0.9] tracking-tight text-red-600 text-[15vw] sm:text-[10vw] md:text-[7.5rem] lg:text-[6.5rem] xl:text-[10rem] 2xl:text-[11rem] font-normal"
                 />
               </div>
 
@@ -56,8 +56,8 @@ function Hero() {
             </div>
 
             {/* Right: Description + CTA */}
-            <div className="lg:col-span-5 flex flex-col items-start lg:items-end mt-4 lg:mt-6 2xl:mt-[18rem]">
-              <p className="text-white text-lg sm:text-xl 2xl:text-xl leading-snug text-left lg:text-left max-w-md 2xl:max-w-lg z-10">
+            <div className="lg:col-span-5 flex flex-col items-start lg:items-end mt-4 lg:mt-6 xl:mt-[14rem] 2xl:mt-[18rem]">
+              <p className="text-white text-lg sm:text-xl xl:text-2xl 2xl:text-xl leading-snug text-left lg:text-left max-w-md 2xl:max-w-lg z-10">
                 Empower your wellness business with AI-powered tools to streamline operations, improve client outcomes, and <span className="text-red-600">accelerate growth.</span>
               </p>
             </div>

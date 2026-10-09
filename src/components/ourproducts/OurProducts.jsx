@@ -14,7 +14,7 @@ export default function OurProducts() {
       name: "Platinum",
       icon: Crown,
       duration: "360 Days",
-      price: "5,20,000",
+      price: "52,000",
       accent: "#C7CDD1",
       accentSoft: "rgba(199,205,209,0.10)",
     },
