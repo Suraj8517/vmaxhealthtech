@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import img1 from "../../assets/img2.webp";
+import img1 from "../../assets/img3.webp";
+import img2 from "../../assets/img2.webp";
+
 
 const ACCENT = "#ff2b2b";
 const MOBILE_BREAKPOINT = 768; // matches Tailwind's `md`
@@ -157,7 +159,7 @@ function MissionVisionMobile() {
         }}
       >
         <img
-          src={img1}
+          src={img2}
           alt="Two designers reviewing work together on a laptop"
           className="h-full w-full object-cover"
         />

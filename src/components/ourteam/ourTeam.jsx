@@ -12,7 +12,6 @@ gsap.registerPlugin(ScrollTrigger);
 const TEAM = [
   { name: "Vignesh Prabhakaran", role: "Founder / Visionary / Chief Business Director", accent: "#ef4444", img: vignesh },
   { name: "Sarvesh Prabhakaran", role: "Co Founder / CEO", accent: "#f87171", img: sarvesh },
-  { name: "Pritika", role: "Influencer / Brand Partner(FitMom Club)", accent: "#dc2626", img: pritika },
   { name: "Sangameswaran ", role: "Senior Operations Manager", accent: "#fca5a5", img: sanga },
   { name: "Vinothini", role: "Product Manager", accent: "#b91c1c", img: vinothini },
 ];
@@ -101,7 +100,7 @@ function SectionBackdrop() {
 
 function Heading() {
   return (
-    <div className="flex items-start gap-3">
+    <div className="flex items-start gap-3 ">
       <h2 className="text-[15vw] font-light leading-[0.95] tracking-tight text-white sm:text-[74px] md:text-[86px]">
         Meet our
         <br />
@@ -117,7 +116,7 @@ function MobileTeamSection() {
   return (
     <section className="relative isolate w-full overflow-hidden bg-[#10100E] py-16">
       <SectionBackdrop />
-      <div className="relative px-6">
+      <div className="relative px-6 pt-16">
         <Heading />
         <p className="mt-6 max-w-xs text-[15px] font-light leading-relaxed text-white/60">
           We are a diverse team of domain experts and problem solvers.
@@ -125,7 +124,7 @@ function MobileTeamSection() {
       </div>
 
       <div
-        className="relative mt-10 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="relative mt-10 flex flex-col items-center snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {TEAM.map((person) => (
           <div key={person.name} className="snap-start">

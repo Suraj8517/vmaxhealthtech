@@ -2,26 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import logo from "../assets/vmax.png";
 
-/**
- * NOTE ON INTEGRATION
- * This preview reads window.location.pathname instead of react-router-dom's
- * useLocation so it can render standalone in isolation. In your app, restore
- * real routing:
- *
- *   import { NavLink, useLocation } from "react-router-dom";
- *   const { pathname } = useLocation(); // replaces the useState below
- *   // swap each <a href={link.to}> below for <NavLink to={link.to}>,
- *   // keeping the onClick that closes the drawer.
- *
- * Also swap in your real logo asset:
- *   import logo from "../assets/logo.png";
- *
- * NOTE ON FONT
- * "Space Grotesk" is referenced via `font-[Space_Grotesk,sans-serif]` below.
- * Load it once globally (document head <link>, next/font, or your CSS
- * entrypoint) instead of injecting it per-component — the Footer component
- * uses the same face.
- */
+
 
 const NAV_LINKS = [
   { label: "Home", to: "/" },
@@ -81,10 +62,11 @@ export default function Navbar() {
           : "bg-transparent border-transparent"
       }`}
     >
-      <nav className="mx-auto flex h-14 max-w-[1180px] items-center justify-between px-4 sm:h-16 sm:px-6 md:h-[68px] md:px-8">
+      <nav className="mx-auto flex h-14 max-w-[1480px] items-center justify-between px-4 sm:h-16 sm:px-6 md:h-[68px] md:px-8">
         {/* Wordmark */}
-        <a href="/" className="flex shrink-0 items-center gap-2.5 text-[#F1F1EA] no-underline">
-          <img src={logo} alt="VMax" className="w-11 sm:w-12 md:w-14" />
+        <a href="/" className="flex shrink-0 items-center gap-1 text-[#F1F1EA] no-underline">
+          <img src={logo} alt="VMax" className="w-13 sm:w-12 md:w-14" />
+          <h2 className="text-lg font-circular font-light leading-[.9] text-white/80"><span className="text-red-600">VMAX</span><br/> HEALTHTECH</h2>
         </a>
 
         {/* Menu trigger (desktop — text label + icon) */}
@@ -194,7 +176,7 @@ export default function Navbar() {
         <div className="flex flex-shrink-0 flex-col gap-4 border-t border-[#26261F] px-5 pb-[calc(20px+env(safe-area-inset-bottom))] pt-5 sm:px-7 sm:pb-[26px] sm:pt-[22px]">
           <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[11px] tracking-[0.04em] text-[#6E7066]">
             <span>© {new Date().getFullYear()}</span>
-            <span>hello@yourbrand.com</span>
+            <span>info@vmaxhealthtech.com</span>
           </div>
         </div>
       </aside>

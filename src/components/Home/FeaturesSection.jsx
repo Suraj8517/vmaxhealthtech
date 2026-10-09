@@ -5,7 +5,7 @@ import HeroSecondSection from "./HeroSecondSection";
 import LightTunnel from "../Helper/LightTunnel";
 import DotGrid from "../Helper/DotGrid";
 import FeatureSecondSection from "./FeatureSecondSection";
-
+import bg from "../../assets/bg.mp4"; 
 const features = [
   {
     icon: BookOpen,
@@ -61,36 +61,7 @@ export default function FeaturesSection() {
 
       <div className="sticky top-0 z-0 h-screen w-full overflow-hidden">
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <LightTunnel
-            cableColor="#ff0000"
-            pulseColor="#fa0000"
-            tunnelColor="#ff0000"
-            tunnelOpacity={0}
-            speed={0.1}
-            flowDirection="outward"
-            pulseSpeed={2}
-            pulseLength={0.28}
-            pulseBlend={1}
-            pulseWidth={1}
-            cableCount={20}
-            thickness={0.35}
-            rimWidth={0.15}
-            waviness={0.3}
-            sway={0.5}
-            size={1}
-            centerX={0}
-            centerY={0}
-            glow={1}
-            fadeNear={0.5}
-            fadeFar={2}
-            brightness={1}
-            colorVariance
-            grain
-            grainIntensity={0.05}
-            opacity={1}
-            mouseInteraction
-            mouseStrength={0.1}
-          />
+          <video src={bg} autoPlay loop muted className="w-full h-full object-cover" />
         </div>
 
         <div
