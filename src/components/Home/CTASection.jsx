@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 function CTA() {
   const sectionRef = useRef(null);
@@ -57,12 +58,12 @@ function CTA() {
         </h2>
 
         <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center gap-4">
-          <button className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#ff2727] text-white font-medium text-base sm:text-lg hover:bg-[#e01f1f] transition-colors duration-300">
-            Get Started Free
-          </button>
-          <button className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/20 text-white font-medium text-base sm:text-lg hover:border-white/40 hover:bg-white/5 transition-colors duration-300">
+          <Link to="/book-a-demo" className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#ff2727] text-white font-medium text-base sm:text-lg hover:bg-[#e01f1f] transition-colors duration-300">
             Book a Demo
-          </button>
+          </Link>
+          <Link to="/about-us" className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/20 text-white font-medium text-base sm:text-lg hover:border-white/40 hover:bg-white/5 transition-colors duration-300">
+            Learn More
+          </Link>
         </div>
       </div>
     </section>

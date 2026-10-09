@@ -11,9 +11,11 @@ import Footer from "../components/Footer";
 import TermsAndConditions from "./termsandcondition";
 import RefundPolicy from "./refundPolicy";
 import PrivacyPolicy from "./privacypolicy";
+import BookADemo from "./bookademo";
+import ScrollToTop from "../components/Helper/scrollToTop";
 
 
-function App() {
+function LandingPage() {
   const [loaderDone, setLoaderDone] = useState(() => {
     return sessionStorage.getItem("loaderShown") === "true";
   });
@@ -33,7 +35,9 @@ function App() {
         <>
         
 <Navbar/>
+ <ScrollToTop />   
           <Routes>
+            <Route path='/book-a-demo' element={<BookADemo />} />
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
        <Route path="/team" element={<Team />} />
@@ -49,4 +53,4 @@ function App() {
   );
 }
 
-export default App;
+export default LandingPage;
