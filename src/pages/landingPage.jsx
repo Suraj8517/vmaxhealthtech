@@ -13,7 +13,7 @@ import RefundPolicy from "./refundPolicy";
 import PrivacyPolicy from "./privacypolicy";
 import BookADemo from "./bookademo";
 import ScrollToTop from "../components/Helper/scrollToTop";
-
+import NotFound from "./404"; 
 
 function LandingPage() {
   const [loaderDone, setLoaderDone] = useState(() => {
@@ -37,6 +37,7 @@ function LandingPage() {
 <Navbar/>
  <ScrollToTop />   
           <Routes>
+            <Route path='*' element={<NotFound />} />
             <Route path='/book-a-demo' element={<BookADemo />} />
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />

@@ -61,7 +61,7 @@ function CTA() {
           <Link to="/book-a-demo" className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#ff2727] text-white font-medium text-base sm:text-lg hover:bg-[#e01f1f] transition-colors duration-300">
             Book a Demo
           </Link>
-          <Link to="/about-us" className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/20 text-white font-medium text-base sm:text-lg hover:border-white/40 hover:bg-white/5 transition-colors duration-300">
+          <Link to="/about" className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/20 text-white font-medium text-base sm:text-lg hover:border-white/40 hover:bg-white/5 transition-colors duration-300">
             Learn More
           </Link>
         </div>

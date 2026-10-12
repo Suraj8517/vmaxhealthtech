@@ -1,16 +1,6 @@
 import React, { useState } from "react";
-
-const GRAIN_BG =
-  "data:image/svg+xml;utf8," +
-  encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'>
-      <filter id='n'>
-        <feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/>
-        <feColorMatrix type='saturate' values='0'/>
-      </filter>
-      <rect width='100%' height='100%' filter='url(#n)'/>
-    </svg>`
-  );
+import SectionBackdrop from "../components/contact/sectionBackDrop";
+import CornerMark from "../components/Helper/cornerMarker";
 
 const INITIAL = { name: "", email: "", phone: "", company: "", message: "" };
 
@@ -51,34 +41,9 @@ function validate(v) {
   return e;
 }
 
-function SectionBackdrop() {
-  return (
-    <>
-      <div
-        className="pointer-events-none absolute inset-0 opacity-60"
-        style={{
-          background:
-            "radial-gradient(60% 50% at 8% 15%, rgba(239,68,68,0.10), transparent 60%), radial-gradient(50% 40% at 100% 30%, rgba(220,38,38,0.08), transparent 60%), linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.03) 48%, transparent 56%)",
-        }}
-      />
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.05]"
-        style={{ backgroundImage: `url("${GRAIN_BG}")`, backgroundSize: "140px 140px" }}
-      />
-    </>
-  );
-}
 
-function CornerMark({ className = "" }) {
-  return (
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className={className}>
-      <path d="M1 6V1H6" stroke="currentColor" strokeWidth="1.2" />
-      <path d="M16 1H21V6" stroke="currentColor" strokeWidth="1.2" />
-      <path d="M21 16V21H16" stroke="currentColor" strokeWidth="1.2" />
-      <path d="M6 21H1V16" stroke="currentColor" strokeWidth="1.2" />
-    </svg>
-  );
-}
+
+
 
 function Field({ id, label, optional, error, children }) {
   return (
@@ -106,7 +71,7 @@ export default function ContactForm({ onSubmit }) {
   const [values, setValues] = useState(INITIAL);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | sending | sent | failed
-
+const sheet_url = "https://script.google.com/macros/s/AKfycbwfrK8tuG2wHWSyyDcCTQUZhkii9ngwXM0Fg4hKLExhjnYF-3zrqvrrsurzQeaxREE/exec"
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues((v) => ({ ...v, [name]: value }));
@@ -121,9 +86,13 @@ export default function ContactForm({ onSubmit }) {
 
     setStatus("sending");
     try {
-      // Replace with your API call, e.g. fetch("/api/contact", { method: "POST", ... })
+await fetch(sheet_url,{
+  method:'POST',
+  mode:'no-cors',
+  headers:{"Content-Type": "text/plain;charset=utf-8"},
+  body:JSON.stringify(values)
+});
       if (onSubmit) await onSubmit(values);
-      else await new Promise((r) => setTimeout(r, 800));
       setStatus("sent");
       setValues(INITIAL);
     } catch {
@@ -186,7 +155,7 @@ export default function ContactForm({ onSubmit }) {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-9">
+            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-9 lg:pt-14">
               <Field id="name" label="Name" error={errors.name}>
                 <input
                   id="name"
