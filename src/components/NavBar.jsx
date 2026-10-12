@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import logo from "../assets/vmax.png";
+import { Link } from "react-router-dom";
 
 
 
@@ -175,7 +176,7 @@ export default function Navbar() {
         {/* Footer — CTA + contact, pinned to bottom, respects the home-indicator safe area on iOS */}
         <div className="flex flex-shrink-0 flex-col gap-4 border-t border-[#26261F] px-5 pb-[calc(20px+env(safe-area-inset-bottom))] pt-5 sm:px-7 sm:pb-[26px] sm:pt-[22px]">
           <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[11px] tracking-[0.04em] text-[#6E7066]">
-            <span>© {new Date().getFullYear()}</span>
+            <Link to="/book-a-demo" className="text-[13px] font-semibold uppercase tracking-[0.08em] text-white transition-colors duration-150 ease-out hover:text-[#FF0000]">Book a Demo</Link>
             <span>info@vmaxhealthtech.com</span>
           </div>
         </div>

@@ -22,17 +22,7 @@ const NAV_LINKS = [
 ];
 
 const SOCIALS = [
-  {
-    label: "Instagram",
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" />
-        <circle cx="12" cy="12" r="4" />
-        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
-      </svg>
-    ),
-    href: "https://www.instagram.com/fitmomclub.co/",
-  },
+  
   {
     label: "Facebook",
     icon: (
@@ -40,7 +30,7 @@ const SOCIALS = [
         <path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.022 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.522 1.492-3.915 3.777-3.915 1.094 0 2.238.197 2.238.197v2.476h-1.26c-1.243 0-1.63.775-1.63 1.57v1.888h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.918 8.437-9.94z" />
       </svg>
     ),
-    href: "https://www.facebook.com/Fitmomclub.co",
+    href: "https://www.facebook.com/vmax.fit.community",
   },
   {
     label: "YouTube",
@@ -49,7 +39,7 @@ const SOCIALS = [
         <path d="M23.498 6.186a2.994 2.994 0 0 0-2.107-2.12C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.391.521a2.994 2.994 0 0 0-2.107 2.12A31.29 31.29 0 0 0 0 12a31.29 31.29 0 0 0 .502 5.814 2.994 2.994 0 0 0 2.107 2.12c1.886.521 9.391.521 9.391.521s7.505 0 9.391-.521a2.994 2.994 0 0 0 2.107-2.12A31.29 31.29 0 0 0 24 12a31.29 31.29 0 0 0-.502-5.814zM9.6 15.568V8.432L15.818 12 9.6 15.568z" />
       </svg>
     ),
-    href: "https://www.youtube.com/channel/UCD1g7ji_oZieKaeU3vMvoQw",
+    href: "https://www.youtube.com/@vmaxfitness7913",
   },
   {
     label: "LinkedIn",
@@ -58,7 +48,7 @@ const SOCIALS = [
         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.446-2.136 2.94v5.666H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM7.114 20.452H3.558V9h3.556v11.452z" />
       </svg>
     ),
-    href: "https://linkedin.com/company/vmax",
+    href: "https://www.linkedin.com/company/vmaxwellness/",
   },
 ];
 
