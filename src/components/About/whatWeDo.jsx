@@ -60,8 +60,6 @@ export default function WhatWeDo() {
 
   // scrollYProgress goes 0 -> 1 across the pinned range (top of section
   // hits top of viewport -> bottom of section hits bottom of viewport).
-  // This is read straight off the DOM by Framer's own rAF loop, not through
-  // React state, so it doesn't force a re-render on every scroll tick.
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
     offset: ["start start", "end end"],
@@ -90,7 +88,6 @@ export default function WhatWeDo() {
   const stepYs = [step0Y, step1Y, step2Y];
 
   // Marker 1: travels segment [0,1], marker 2: [1,2], marker 3: [2,3].
-  // Add another block below (and to STEPS) if you add more steps.
   const left1 = useTransform(mp, [0, 1], ["0%", `${(1 / TOTAL_MARKERS) * 100}%`], { clamp: true });
   const rotate1 = useTransform(mp, [0, 1], ["0deg", `${360 * ROTATIONS_PER_SEGMENT}deg`], { clamp: true });
   const opacity1 = useTransform(mp, [0, 0.001], [0, 1], { clamp: true });
@@ -108,10 +105,9 @@ export default function WhatWeDo() {
   const transform3 = useMotionTemplate`translate(-50%, -50%) rotate(${rotate3})`;
 
   if (!animated) {
-    // Static fallback: mobile / reduced-motion just shows the end state,
-    // no scroll wiring, no framer motion values in play.
+    // Static fallback: mobile / reduced-motion just shows the end state.
     return (
-      <section ref={wrapperRef} className="relative bg-[#08090a]">
+      <section ref={wrapperRef} className="relative bg-[#08090a]" id="learn-more">
         <div className="flex items-center overflow-hidden py-24 md:py-32">
           <div className="mx-auto w-full max-w-7xl px-6 md:px-10 lg:px-16">
             <Header />
@@ -135,7 +131,12 @@ export default function WhatWeDo() {
   }
 
   return (
-    <section ref={wrapperRef} style={{ height: "260vh" }} className="relative bg-[#08090a]">
+    <section
+      ref={wrapperRef}
+      id="learn-more"
+      style={{ height: "260vh" }}
+      className="relative bg-[#08090a]"
+    >
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         <div className="mx-auto w-full max-w-7xl px-6 md:px-10 lg:px-16">
           <Header />
@@ -202,7 +203,7 @@ function Header() {
         What We Do
       </h2>
       <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/40 md:text-base">
-       Our flagship product is a state-of-the-art Customer Relationship Management (CRM) system designed specifically for the health and wellness sector. Our CRM is more than just a tool; it’s a comprehensive solution that integrates seamlessly into your daily operations.
+        Our flagship product is a state-of-the-art Customer Relationship Management (CRM) system designed specifically for the health and wellness sector. Our CRM is more than just a tool; it’s a comprehensive solution that integrates seamlessly into your daily operations.
       </p>
     </>
   );

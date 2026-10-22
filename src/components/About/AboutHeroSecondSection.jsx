@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import logo from "../../assets/vmax.png"
+import logo from "../../assets/vmax.png";
 import AuroraText from "../Helper/AuroraText";
+
 const HEADLINE =
   "DRIVING INNOVATION IN HEALTH AND WELLNESS THROUGH TECHNOLOGY, DESIGN, AND INTELLIGENT DIGITAL SOLUTIONS THAT CREATE LASTING IMPACT.";
 
@@ -71,9 +72,7 @@ function Seal({ size = 188, minSize = 128, viewportShare = "30vw", logoSrc, logo
         </text>
       </svg>
 
-      {/* Logo, held fixed in the center while the ring rotates around it.
-          Sized as a percentage of the (now fluid) parent so it scales with
-          the seal instead of drifting out of proportion on small screens. */}
+      {/* Logo, held fixed in the center while the ring rotates around it. */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <div
           className="flex items-center justify-center rounded-full"
@@ -100,6 +99,17 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
   const bodyWrapRef = useRef(null);
   const sealWrapRef = useRef(null);
 
+  // Smooth-scroll to the "What We Do" section.
+  const handleLearnMore = (e) => {
+    e.preventDefault();
+    const target = document.getElementById("learn-more");
+    if (!target) return;
+    target.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  };
+
   useEffect(() => {
     // Inject the keyframes once; keeps the component fully self-contained.
     const styleEl = document.createElement("style");
@@ -113,8 +123,7 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
     return () => document.head.removeChild(styleEl);
   }, []);
 
-  // Trigger the entrance sequence once the section actually enters the
-  // viewport, rather than immediately on mount.
+  // Trigger the entrance sequence once the section enters the viewport.
   useEffect(() => {
     if (prefersReducedMotion) {
       setLoaded(true);
@@ -136,10 +145,7 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
     return () => observer.disconnect();
   }, [prefersReducedMotion]);
 
-  // Scroll parallax: headline/body ease upward and fade slightly, the seal
-  // drifts and gently scales as the section leaves the top of the viewport.
-  // Skipped on mobile-width screens so the seal doesn't fight the natural
-  // document scroll of a taller, non-h-screen layout.
+  // Scroll parallax (skipped on mobile-width screens).
   useEffect(() => {
     if (prefersReducedMotion) return;
     if (typeof window !== "undefined" && window.innerWidth < 768) return;
@@ -198,8 +204,7 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
       className="relative flex min-h-[50vh] md:min-h-screen w-full flex-col justify-center gap-12 overflow-hidden bg-black px-6 py-20 md:h-screen md:justify-between md:gap-4 md:px-16 md:py-10"
     >
       <div className="relative mx-auto w-full max-w-7xl md:mx-4 grid grid-cols-1 gap-8 md:grid-cols-[1.1fr_1fr] md:gap-4 md:items-center">
-        {/* Headline — pulled up well above the row on desktop; sits at the
-            natural top of the stack on mobile */}
+        {/* Headline */}
         <div ref={headlineWrapRef} style={{ willChange: "transform, opacity" }}>
           <h1
             className="max-w-xl self-start font-circular text-[26px] font-bold uppercase leading-[1.2] tracking-tight text-white sm:text-4xl md:-mt-10 transition-all"
@@ -210,13 +215,12 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
               opacity: loaded ? 1 : 0,
               transform: loaded ? "translateY(0)" : "translateY(28px)",
             }}
-          ><AuroraText>{HEADLINE}</AuroraText>
-            
+          >
+            <AuroraText>{HEADLINE}</AuroraText>
           </h1>
         </div>
 
-        {/* Body copy + CTA, right column on desktop — full width and
-            naturally stacked below the headline on mobile */}
+        {/* Body copy + CTA */}
         <div ref={bodyWrapRef} style={{ willChange: "transform, opacity" }}>
           <div
             className="flex flex-col justify-center self-center md:mt-22 md:pt-2 transition-all"
@@ -232,8 +236,9 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
               {BODY}
             </p>
 
-            <button
-              type="button"
+            <a
+              href="#learn-more"
+              onClick={handleLearnMore}
               className="group mt-8 flex w-fit items-center gap-3 focus:outline-none md:mt-10"
             >
               <span
@@ -245,14 +250,12 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
               <span className="text-xs font-bold uppercase tracking-[0.18em] text-white/90 transition-colors group-hover:text-[#ff2b2b]">
                 Learn more
               </span>
-            </button>
+            </a>
           </div>
         </div>
       </div>
 
-      {/* Rotating seal — follows the natural document flow right under the
-          content on mobile (no forced bottom placement), and anchors to
-          the bottom-right of the h-screen layout on desktop */}
+      {/* Rotating seal (desktop only) */}
       <div
         ref={sealWrapRef}
         className="md:flex justify-center md:justify-end md:pr-8 hidden "
@@ -270,7 +273,7 @@ export default function AboutHeroSection({ logoSrc, logoAlt }) {
             }deg)`,
           }}
         >
-          <Seal size={168} minSize={108} viewportShare="30vw" logoSrc={logo} logoAlt={logoAlt}  />
+          <Seal size={168} minSize={108} viewportShare="30vw" logoSrc={logo} logoAlt={logoAlt} />
         </div>
       </div>
     </section>

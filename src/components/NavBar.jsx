@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import logo from "../assets/vmax.png";
-import { Link } from "react-router-dom";
-
-
+import { Link, useLocation } from "react-router-dom";
 
 const NAV_LINKS = [
   { label: "Home", to: "/" },
@@ -12,28 +10,28 @@ const NAV_LINKS = [
   { label: "Products", to: "/our-products" },
 ];
 
-// Trailing-slash-tolerant, case-insensitive match so "/about" vs "/about/"
-// (or route casing) doesn't silently break which link is treated as active.
+// Trailing-slash-tolerant, case-insensitive match. Nested routes such as
+// "/our-products/xyz" keep "Products" highlighted; "Home" only matches "/".
 function isActivePath(pathname, to) {
   const clean = (p) => p.replace(/\/+$/, "").toLowerCase() || "/";
-  return clean(pathname) === clean(to);
+  const a = clean(pathname);
+  const b = clean(to);
+  return b === "/" ? a === "/" : a === b || a.startsWith(b + "/");
 }
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  // Reflects the real current page, not just the last link clicked — so a
-  // hard refresh or landing directly on /about still highlights "About".
-  const [pathname, setPathname] = useState(
-    typeof window !== "undefined" ? window.location.pathname : "/"
-  );
+  // Comes straight from React Router, so it updates on every navigation:
+  // <Link>, navigate(), back/forward, or landing directly on a URL.
+  const { pathname } = useLocation();
   const drawerRef = useRef(null);
 
+  // Close the drawer whenever the route changes (including navigation
+  // triggered from buttons elsewhere in the page).
   useEffect(() => {
-    const onPopState = () => setPathname(window.location.pathname);
-    window.addEventListener("popstate", onPopState);
-    return () => window.removeEventListener("popstate", onPopState);
-  }, []);
+    setOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -65,10 +63,16 @@ export default function Navbar() {
     >
       <nav className="mx-auto flex h-14 max-w-[1480px] items-center justify-between px-4 sm:h-16 sm:px-6 md:h-[68px] md:px-8">
         {/* Wordmark */}
-        <a href="/" className="flex shrink-0 items-center gap-1 text-[#F1F1EA] no-underline">
+        <Link
+          to="/"
+          className="flex shrink-0 items-center gap-1 text-[#F1F1EA] no-underline"
+        >
           <img src={logo} alt="VMax" className="w-13 sm:w-12 md:w-14" />
-          <h2 className="text-lg font-circular font-light leading-[.9] text-white/80"><span className="text-red-600">VMAX</span><br/> HEALTHTECH</h2>
-        </a>
+          <h2 className="text-lg font-circular font-light leading-[.9] text-white/80">
+            <span className="text-red-600">VMAX</span>
+            <br /> HEALTHTECH
+          </h2>
+        </Link>
 
         {/* Menu trigger (desktop — text label + icon) */}
         <button
@@ -144,11 +148,14 @@ export default function Navbar() {
                   i === NAV_LINKS.length - 1 ? "" : "border-b border-[#26261F]"
                 }`}
               >
-                <a
-                  href={link.to}
+                <Link
+                  to={link.to}
                   onClick={() => setOpen(false)}
+                  aria-current={isActive ? "page" : undefined}
                   className={`relative flex h-full w-full items-center justify-between gap-3 px-5 text-left no-underline transition-[background,color] duration-200 ease-in-out hover:bg-[#8C0F0A] hover:text-[#F1F1EA] sm:px-7 md:px-7 ${
-                    isActive ? "bg-[#E63A2E] text-[#0A0A08] hover:bg-[#E63A2E] hover:text-[#0A0A08]" : "bg-transparent text-[#F1F1EA]"
+                    isActive
+                      ? "bg-[#E63A2E] text-[#0A0A08] hover:bg-[#E63A2E] hover:text-[#0A0A08]"
+                      : "bg-transparent text-[#F1F1EA]"
                   }`}
                   style={{
                     opacity: open ? 1 : 0,
@@ -165,9 +172,11 @@ export default function Navbar() {
                   <ArrowUpRight
                     size={24}
                     strokeWidth={2.25}
-                    className={`shrink-0 sm:size-[26px] ${isActive ? "opacity-100" : "opacity-35"}`}
+                    className={`shrink-0 sm:size-[26px] ${
+                      isActive ? "opacity-100" : "opacity-35"
+                    }`}
                   />
-                </a>
+                </Link>
               </li>
             );
           })}
@@ -176,7 +185,13 @@ export default function Navbar() {
         {/* Footer — CTA + contact, pinned to bottom, respects the home-indicator safe area on iOS */}
         <div className="flex flex-shrink-0 flex-col gap-4 border-t border-[#26261F] px-5 pb-[calc(20px+env(safe-area-inset-bottom))] pt-5 sm:px-7 sm:pb-[26px] sm:pt-[22px]">
           <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[11px] tracking-[0.04em] text-[#6E7066]">
-            <Link to="/book-a-demo" className="text-[13px] font-semibold uppercase tracking-[0.08em] text-white transition-colors duration-150 ease-out hover:text-[#FF0000]">Book a Demo</Link>
+            <Link
+              to="/book-a-demo"
+              onClick={() => setOpen(false)}
+              className="text-[13px] font-semibold uppercase tracking-[0.08em] text-white transition-colors duration-150 ease-out hover:text-[#FF0000]"
+            >
+              Book a Demo
+            </Link>
             <span>info@vmaxhealthtech.com</span>
           </div>
         </div>

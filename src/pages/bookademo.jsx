@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import SectionBackdrop from "../components/contact/sectionBackDrop";
 import CornerMark from "../components/Helper/cornerMarker";
 
-const INITIAL = { name: "", email: "", phone: "", company: "", message: "" };
+const SHEET_URL = import.meta.env.VITE_SHEET_URL || "";
+
+const INITIAL = { name: "", email: "", phone: "", company: "", message: "", website: "" };
 
 const CONTACTS = [
   {
@@ -29,21 +31,79 @@ const CONTACTS = [
   },
 ];
 
+/* ───────────── validation (mirrors the Apps Script rules) ───────────── */
+
+const NAME_RE = /^\p{L}[\p{L}\p{M} .'-]{1,59}$/u;
+const EMAIL_RE =
+  /^[A-Za-z0-9][A-Za-z0-9._%+-]{0,63}@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*\.[A-Za-z]{2,24}$/;
+const PHONE_RE = /^\+?[0-9]{7,15}$/;
+const COMPANY_RE = /^[\p{L}\p{N}][\p{L}\p{M}\p{N} .,&'()/-]{0,99}$/u;
+
+const CONTROL = /[\u0000-\u001F\u007F-\u009F\u200B-\u200F\u202A-\u202E\u2066-\u2069\uFEFF]/g;
+const CONTROL_KEEP_NL = /[\u0000-\u0009\u000B-\u001F\u007F-\u009F\u200B-\u200F\u202A-\u202E\u2066-\u2069\uFEFF]/g;
+const MESSAGE_BAD = /[^\p{L}\p{M}\p{N} \n.,!?'"():;/&@#%+_-]/gu;
+
+const sanitizers = {
+  name: (v) =>
+    v
+      .replace(/[’‘]/g, "'")
+      .replace(/[^\p{L}\p{M} .'-]/gu, "")
+      .replace(/^[^\p{L}]+/u, "")
+      .replace(/\s{2,}/g, " ")
+      .slice(0, 60),
+  email: (v) =>
+    v
+      .replace(/[^A-Za-z0-9._%+@-]/g, "")
+      .replace(/^[^A-Za-z0-9]+/, "")
+      .slice(0, 254),
+  phone: (v) => v.replace(/[^+()\-\s\d]/g, "").slice(0, 22),
+  company: (v) =>
+    v
+      .replace(/[’‘]/g, "'")
+      .replace(/[^\p{L}\p{M}\p{N} .,&'()/-]/gu, "")
+      .replace(/^[^\p{L}\p{N}]+/u, "")
+      .replace(/\s{2,}/g, " ")
+      .slice(0, 100),
+  message: (v) =>
+    v
+      .replace(/[’‘]/g, "'")
+      .replace(/[“”]/g, '"')
+      .replace(CONTROL_KEEP_NL, "")
+      .replace(MESSAGE_BAD, "")
+      .replace(/\n{3,}/g, "\n\n")
+      .slice(0, 1000),
+  website: (v) => v, // honeypot: leave as-is
+};
+
+const cleanPhone = (v) => v.replace(CONTROL, "").replace(/[\s()-]/g, "");
+
 function validate(v) {
   const e = {};
-  if (!v.name.trim()) e.name = "Enter your name.";
-  if (!v.email.trim()) e.email = "Enter your email.";
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email))
-    e.email = "Enter a valid email address.";
-  if (v.phone.trim() && !/^[+()\-\s\d]{7,18}$/.test(v.phone))
-    e.phone = "Enter a valid phone number.";
-  if (!v.message.trim()) e.message = "Tell us how we can help.";
+  const name = v.name.trim();
+  const email = v.email.trim();
+  const phone = cleanPhone(v.phone);
+  const company = v.company.trim();
+  const message = v.message.trim();
+
+  if (!name) e.name = "Enter your name.";
+  else if (!NAME_RE.test(name)) e.name = "Use letters only (spaces, . ' - allowed).";
+
+  if (!email) e.email = "Enter your email.";
+  else if (!EMAIL_RE.test(email)) e.email = "Enter a valid email address.";
+
+  // Server requires a phone number, so it is required here too.
+  if (!phone) e.phone = "Enter your phone number.";
+  else if (!PHONE_RE.test(phone)) e.phone = "Enter 7–15 digits, with an optional leading +.";
+
+  if (company && !COMPANY_RE.test(company)) e.company = "Enter a valid company name.";
+
+  if (!message) e.message = "Tell us how we can help.";
+  else if (message.length < 5) e.message = "Please write at least 5 characters.";
+
   return e;
 }
 
-
-
-
+/* ───────────── UI ───────────── */
 
 function Field({ id, label, optional, error, children }) {
   return (
@@ -71,28 +131,50 @@ export default function ContactForm({ onSubmit }) {
   const [values, setValues] = useState(INITIAL);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | sending | sent | failed
-const sheet_url = "https://script.google.com/macros/s/AKfycbwfrK8tuG2wHWSyyDcCTQUZhkii9ngwXM0Fg4hKLExhjnYF-3zrqvrrsurzQeaxREE/exec"
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setValues((v) => ({ ...v, [name]: value }));
+    const clean = sanitizers[name] ? sanitizers[name](value) : "";
+    setValues((v) => ({ ...v, [name]: clean }));
     if (errors[name]) setErrors((er) => ({ ...er, [name]: undefined }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (status === "sending") return;
+
     const found = validate(values);
     setErrors(found);
     if (Object.keys(found).length) return;
 
+    // Honeypot tripped: pretend success, send nothing
+    if (values.website) {
+      setStatus("sent");
+      setValues(INITIAL);
+      return;
+    }
+
+    // Only the five expected fields, trimmed and cleaned, are sent
+    const payload = {
+      name: values.name.replace(/\s+/g, " ").trim(),
+      email: values.email.trim().toLowerCase(),
+      phone: cleanPhone(values.phone),
+      company: values.company.replace(/\s+/g, " ").trim(),
+      message: values.message.trim(),
+      website: "",
+    };
+
     setStatus("sending");
     try {
-await fetch(sheet_url,{
-  method:'POST',
-  mode:'no-cors',
-  headers:{"Content-Type": "text/plain;charset=utf-8"},
-  body:JSON.stringify(values)
-});
-      if (onSubmit) await onSubmit(values);
+      if (SHEET_URL) {
+        await fetch(SHEET_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload),
+        });
+      }
+      if (onSubmit) await onSubmit(payload);
       setStatus("sent");
       setValues(INITIAL);
     } catch {
@@ -155,13 +237,14 @@ await fetch(sheet_url,{
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-9 lg:pt-14">
+            <form onSubmit={handleSubmit} noValidate className="relative flex flex-col gap-9 lg:pt-14">
               <Field id="name" label="Name" error={errors.name}>
                 <input
                   id="name"
                   name="name"
                   type="text"
                   autoComplete="name"
+                  maxLength={60}
                   value={values.name}
                   onChange={handleChange}
                   placeholder="Your full name"
@@ -178,6 +261,7 @@ await fetch(sheet_url,{
                     name="email"
                     type="email"
                     autoComplete="email"
+                    maxLength={254}
                     value={values.email}
                     onChange={handleChange}
                     placeholder="you@company.com"
@@ -192,6 +276,7 @@ await fetch(sheet_url,{
                     name="phone"
                     type="tel"
                     autoComplete="tel"
+                    maxLength={22}
                     value={values.phone}
                     onChange={handleChange}
                     placeholder="+91 98765 43210"
@@ -202,15 +287,18 @@ await fetch(sheet_url,{
                 </Field>
               </div>
 
-              <Field id="company" label="Company" >
+              <Field id="company" label="Company" optional error={errors.company}>
                 <input
                   id="company"
                   name="company"
                   type="text"
                   autoComplete="organization"
+                  maxLength={100}
                   value={values.company}
                   onChange={handleChange}
                   placeholder="Where you work"
+                  aria-invalid={!!errors.company}
+                  aria-describedby={errors.company ? "company-error" : undefined}
                   className={inputClass}
                 />
               </Field>
@@ -220,6 +308,7 @@ await fetch(sheet_url,{
                   id="message"
                   name="message"
                   rows={4}
+                  maxLength={1000}
                   value={values.message}
                   onChange={handleChange}
                   placeholder="What would you like to talk about?"
@@ -228,6 +317,18 @@ await fetch(sheet_url,{
                   className={`${inputClass} resize-none`}
                 />
               </Field>
+
+              {/* Honeypot: hidden from people, bots tend to fill it */}
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={values.website}
+                onChange={handleChange}
+                style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+              />
 
               {status === "failed" && (
                 <p role="alert" className="text-sm font-light text-red-400">

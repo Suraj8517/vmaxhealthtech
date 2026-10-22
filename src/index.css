@@ -54,3 +54,5 @@ body {
     font-family: "Zentry";
     font-feature-settings: "ss01" on;
   }
+
+  .grecaptcha-badge { visibility: hidden; }

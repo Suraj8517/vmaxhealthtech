@@ -6,6 +6,7 @@ import LightTunnel from "../Helper/LightTunnel";
 import DotGrid from "../Helper/DotGrid";
 import FeatureSecondSection from "./FeatureSecondSection";
 import bg from "../../assets/bg.mp4"; 
+import { Link } from "react-router-dom";
 const features = [
   {
     icon: BookOpen,
@@ -104,19 +105,19 @@ export default function FeaturesSection() {
             </h2>
 
             <div className="mt-6 sm:mt-10 flex flex-wrap items-center gap-3">
-              <a
-                href="#"
+              <Link
+                to="/our-products"
                 className="inline-flex items-center justify-center gap-2 rounded-md bg-red-600 px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm font-mono uppercase tracking-wide text-white transition hover:bg-red-500"
               >
                 Our Products
                 <ArrowUpRight className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/about"
                 className="inline-flex items-center justify-center gap-2 rounded-md border border-white/15 bg-white/5 px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm font-mono uppercase tracking-wide text-white transition hover:bg-white/10"
               >
                 About Us
-              </a>
+              </Link>
             </div>
           </div>
 
